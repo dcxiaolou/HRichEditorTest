@@ -154,6 +154,12 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
                 }
             }
         });
+        holder.ivAddClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideAddArea(holder);
+            }
+        });
         /**
          * 设置向下向上箭头、删除的单击事件监听
          */
@@ -339,7 +345,7 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
      * 创建viewholder类
      */
     class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivPic, ivUp, ivDown, ivDrop, ivAddItem, ivAddTxt, ivAddImg, ivAddVideo;
+        ImageView ivPic, ivUp, ivDown, ivDrop, ivAddItem, ivAddTxt, ivAddImg, ivAddVideo, ivAddClose;
         TextView tvDesc;
         RelativeLayout rvItem;
         LinearLayout rvAddItemArea;
@@ -352,6 +358,7 @@ public class RichEditorAdapter extends RecyclerView.Adapter<RichEditorAdapter.My
             ivAddTxt = (ImageView) itemView.findViewById(R.id.iv_additem_txt);
             ivAddImg = (ImageView) itemView.findViewById(R.id.iv_additem_img);
             ivAddVideo = (ImageView) itemView.findViewById(R.id.iv_additem_video);
+            ivAddClose = (ImageView) itemView.findViewById(R.id.iv_additem_close);
             ivUp = (ImageView) itemView.findViewById(R.id.iv_item_up);
             ivDown = (ImageView) itemView.findViewById(R.id.iv_item_down);
             ivDrop = (ImageView) itemView.findViewById(R.id.iv_item_delete);

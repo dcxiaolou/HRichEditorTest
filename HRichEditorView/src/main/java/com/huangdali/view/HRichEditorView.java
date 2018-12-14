@@ -66,14 +66,14 @@ public class HRichEditorView extends Activity {
     private TextView tvArtTitle;
     private ImageView ivArtBGImg;
 
-    private ImageView ivAdd, ivAddTxt, ivAddImg, ivAddVideo;
+    private ImageView ivAdd, ivAddTxt, ivAddImg, ivAddVideo, ivAddClose;
     private LinearLayout rvAddItemArea;
 
     /**
      * 数据区
      */
     private List<EContent> datas;
-    private Uri bgUri;//背景图片的uri
+    private String bgUri;//背景图片的uri
 
     //标题栏添加按钮状态
     private boolean isOpenAdd = false;
@@ -108,18 +108,30 @@ public class HRichEditorView extends Activity {
         }
     }
 
+    public void onPreview(View view) {
+        Log.d("onPreview", "onPreview: ");
+    }
+
     public void onSubmit(View view) {
-        EditorResultBean resultBean = new EditorResultBean();
-        resultBean.setContents(datas);
-        String html = "";
-        for (EContent data : datas) {
-            html += data.getHtml();
+        if (articleTitle == null || articleTitle.equals("点击设置标题") || articleTitle.trim().equals("")) {
+            Toast.makeText(this, "请输入标题", Toast.LENGTH_SHORT).show();
+        } else if (bgUri == null) {
+            Toast.makeText(this, "请更换封面", Toast.LENGTH_SHORT).show();
+        } else {
+            EditorResultBean resultBean = new EditorResultBean();
+            resultBean.setContents(datas);
+            String html = "";
+            for (EContent data : datas) {
+                html += data.getHtml();
+            }
+            Log.e("mylog", html);
+            Intent intent = getIntent();
+            intent.putExtra("contents", resultBean);
+            intent.putExtra("articleTitle", articleTitle);
+            intent.putExtra("bgUri", bgUri);
+            this.setResult(Activity.RESULT_OK, intent);
+            this.finish();
         }
-        Log.e("mylog", html);
-        Intent intent = getIntent();
-        intent.putExtra("contents", resultBean);
-        this.setResult(Activity.RESULT_OK, intent);
-        this.finish();
     }
 
     /**
@@ -147,6 +159,7 @@ public class HRichEditorView extends Activity {
         ivAddTxt = (ImageView) findViewById(R.id.iv_additem_txt);
         ivAddImg = (ImageView) findViewById(R.id.iv_additem_img);
         ivAddVideo = (ImageView) findViewById(R.id.iv_additem_video);
+        ivAddClose = (ImageView) findViewById(R.id.iv_additem_close);
 
         rvAddItemArea = (LinearLayout) findViewById(R.id.ll_additem_addarea);
 
@@ -184,6 +197,13 @@ public class HRichEditorView extends Activity {
                 datas.add(eContent);
                 adapter.notifyDataSetChanged();
                 rvItemList.scrollToPosition(adapter.getItemCount() - 1);
+            }
+        });
+        ivAddClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideAddArea();
+                isOpenAdd = false;
             }
         });
 
@@ -410,7 +430,8 @@ public class HRichEditorView extends Activity {
             articleTitle = data.getStringExtra("title");//记录文章标题
             tvArtTitle.setText(articleTitle);
         } else if (requestCode == REQUEST_CODE_CHOOSE_BG && resultCode == RESULT_OK) {//选择背景
-            bgUri = PicturePickerUtils.obtainResult(data).get(0);
+            bgUri = PicturePickerUtils.obtainResult(data).get(0).toString();
+            Log.d("bgUri", "bgUri: " + bgUri);
             Glide.with(this)
                     .load(bgUri)
                     .placeholder(R.mipmap.default_adv)

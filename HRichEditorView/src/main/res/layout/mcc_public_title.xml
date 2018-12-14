@@ -34,10 +34,20 @@
         android:src="@mipmap/right" />
 
     <ImageView
-        android:id="@+id/iv_add"
+        android:id="@+id/iv_preview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/iv_submit"
+        android:layout_marginRight="10dp"
+        android:layout_centerInParent="true"
+        android:onClick="onPreview"
+        android:src="@mipmap/preview"/>
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/iv_preview"
         android:layout_marginRight="10dp"
         android:layout_centerInParent="true"
         android:onClick="onAdd"

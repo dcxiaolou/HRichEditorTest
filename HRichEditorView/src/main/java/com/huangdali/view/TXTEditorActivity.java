@@ -74,6 +74,7 @@ public class TXTEditorActivity extends Activity {
         setContentView(view);
         ((TextView) view.findViewById(R.id.tv_public_title)).setText(getString(R.string.txt_edit_content));
         ((ImageView) view.findViewById(R.id.iv_add)).setVisibility(View.GONE);
+        ((ImageView) view.findViewById(R.id.iv_preview)).setVisibility(View.GONE);
         tvAddLinked = (TextView) findViewById(R.id.tv_txteditor_addlinked);
         rbFontSize = (MyRadioButton) findViewById(R.id.iv_font_option_a);
         rbFontBold = (MyRadioButton) findViewById(R.id.iv_font_option_b);

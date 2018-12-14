@@ -27,4 +27,24 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //添加module HRichEditorView
     implementation project(path: ':HRichEditorView')
+
+    implementation 'cn.bmob.android:bmob-sdk:3.6.6'
+    implementation 'cn.bmob.android:http-legacy:1.0'
+    // 去除bmob-sdk中包含的常用库，如okhttp、glide
+    implementation('com.squareup.retrofit2:retrofit:2.1.0') {
+        exclude group: 'com.squareup.okhttp3'
+    }
+    implementation('com.squareup.retrofit2:converter-gson:2.1.0') {
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.squareup.okhttp3'
+    }
+    implementation('com.squareup.retrofit2:adapter-rxjava:2.1.0') {
+        exclude group: 'io.reactivex'
+        exclude group: 'com.squareup.okhttp3'
+    }
+
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+
 }

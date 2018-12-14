@@ -28,6 +28,7 @@ public class TitleEidtorActivity extends Activity {
         setContentView(view);
         ((TextView) view.findViewById(R.id.tv_public_title)).setText(getString(R.string.title_edit_title));
         ((ImageView) view.findViewById(R.id.iv_add)).setVisibility(View.GONE);
+        ((ImageView) view.findViewById(R.id.iv_preview)).setVisibility(View.GONE);
         etTitle = (EditText) findViewById(R.id.et_titleeditor_title);
         title = getIntent().getStringExtra("title");
         if (!TextUtils.isEmpty(title)) {
@@ -38,14 +39,15 @@ public class TitleEidtorActivity extends Activity {
     }
 
     public void onSubmit(View view) {
-        if (TextUtils.isEmpty(etTitle.getText().toString().trim())) {
+        if (TextUtils.isEmpty(etTitle.getText().toString().trim()) || etTitle.getText().toString() == "") {
             CToast.show(this, getString(R.string.title_dont_null));
             return;
+        } else {
+            Intent data = new Intent();
+            data.putExtra("title", etTitle.getText().toString().trim());
+            this.setResult(REQUEST_CODE_SET_TITLE, data);
+            finish();
         }
-        Intent data = new Intent();
-        data.putExtra("title", etTitle.getText().toString().trim());
-        this.setResult(REQUEST_CODE_SET_TITLE, data);
-        finish();
     }
 
     public void onBack(View view) {

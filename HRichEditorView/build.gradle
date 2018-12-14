@@ -48,4 +48,7 @@ dependencies {
         all*.exclude group: 'com.android.support', module: 'support-v4'
     }
     implementation 'com.android.support:design:28.0.0'
+
+    implementation 'org.sufficientlysecure:html-textview:3.6'
+
 }

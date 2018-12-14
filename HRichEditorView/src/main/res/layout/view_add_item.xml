@@ -34,5 +34,11 @@
             android:id="@+id/iv_additem_video"
             style="@style/additem"
             android:src="@mipmap/video" />
+
+        <ImageView
+            android:id="@+id/iv_additem_close"
+            style="@style/additem"
+            android:src="@mipmap/close" />
+
     </LinearLayout>
 </LinearLayout>
