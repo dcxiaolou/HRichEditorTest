@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.android.dcxiaolou.hrichedittest.mode.Images;
 import com.android.dcxiaolou.hrichedittest.runtimepermissions.PermissionsManager;
 import com.android.dcxiaolou.hrichedittest.runtimepermissions.PermissionsResultAction;
 import com.huangdali.base.EditorResultBean;
@@ -24,7 +23,6 @@ import java.util.List;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 
@@ -73,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        int wittingTime = 0;
+
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_EDIT) {
             //拿到编辑内容对象
             EditorResultBean resultBean = (EditorResultBean) data.getSerializableExtra("contents");
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             //上传图片、视频，并替换上传之后的服务器图片的url
             final List<EContent> contents = resultBean.getContents();
             for (final EContent content : contents) {
+                wittingTime += 1000;
                 if (ItemType.IMG.equals(content.getType()) || ItemType.VIDEO.equals(content.getType())) {
                     String url = content.getUrl();
                     Log.d(TAG, "url: " + url);
@@ -92,22 +94,25 @@ public class MainActivity extends AppCompatActivity {
             String articleTitle = data.getStringExtra("articleTitle");
             final String bgUri = data.getStringExtra("bgUri");
             if (articleTitle != null) {
-                articleTitle = "<h1>" + articleTitle + "</h1>";
+                articleTitle = "<h1 style='text-align: center;'>" + articleTitle + "</h1>";
             }
             if (bgUri != null) {
+                wittingTime += 1000;
                 uploadFile(bgUri);
             }
             final String header =  articleTitle;
+            final int sleepTime = wittingTime; //根据图片数量设置时间
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(sleepTime);
                         String htmlBody = header + coverUri;
                         for (EContent content : contents) {
                             htmlBody += content.getHtml();
                         }
                         Log.d(TAG, "最终编辑的结果：" + htmlBody);
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -157,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 public void done(BmobException e) {
                     String uploadResult;//用于记录文件上传之后的路径（建议使用相对路径，最好不好写死域名，拼接html的时候再加域名，避免域名更改导致更换麻烦的问题）
                     uploadResult = file.getFileUrl();
-                    setCoverUri("<img src=" + uploadResult + " /><br/>");
+                    setCoverUri("<img style='width:100%;display: inline-block;' src=" + uploadResult + " /><br/>");
                     Log.d(TAG, "uploadResult: " + uploadResult);
                 }
             });

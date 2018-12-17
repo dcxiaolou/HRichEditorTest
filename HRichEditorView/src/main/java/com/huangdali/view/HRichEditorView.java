@@ -109,7 +109,25 @@ public class HRichEditorView extends Activity {
     }
 
     public void onPreview(View view) {
-        Log.d("onPreview", "onPreview: ");
+        if (articleTitle == null || articleTitle.equals("点击设置标题") || articleTitle.trim().equals("")) {
+            Toast.makeText(this, "请输入标题", Toast.LENGTH_SHORT).show();
+        } else if (bgUri == null) {
+            Toast.makeText(this, "请更换封面", Toast.LENGTH_SHORT).show();
+        } else {
+            EditorResultBean resultBean = new EditorResultBean();
+            resultBean.setContents(datas);
+            String html = "";
+            for (EContent data : datas) {
+                html += data.getHtml();
+            }
+            Log.e("mylog", html);
+            Intent intent = new Intent(this, PreviewActivity.class);
+            intent.putExtra("contents", resultBean);
+            intent.putExtra("articleTitle", articleTitle);
+            intent.putExtra("bgUri", bgUri);
+            //this.setResult(Activity.RESULT_OK, intent);
+            this.startActivity(intent);
+        }
     }
 
     public void onSubmit(View view) {

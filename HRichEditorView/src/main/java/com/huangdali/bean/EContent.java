@@ -78,9 +78,9 @@ public class EContent implements Serializable {
         switch (type) {
             case ItemType.IMG:
                 if (!TextUtils.isEmpty(content)) {
-                    html = "<div style='" + style + "' >" + content + "</div><img src='" + url + "' />";
+                    html = "<div style='" + style + "' >" + content + "</div><img style='width:100%;display: inline-block;' src='" + url + "' />";
                 } else {
-                    html = "<img src='" + url + "' />";
+                    html = "<img style='width:100%;display: inline-block;' src='" + url + "' />";
                 }
                 html += "<br/>";
                 break;

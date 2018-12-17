@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hdl.hricheditorview">
 
@@ -13,6 +14,7 @@
         <activity android:name="com.huangdali.view.TitleEidtorActivity" />
         <activity android:name="com.huangdali.view.TXTEditorActivity" />
         <activity android:name="com.huangdali.view.LinkedActivity" />
+        <activity android:name="com.huangdali.view.PreviewActivity"></activity>
     </application>
 
 </manifest>
